@@ -21,14 +21,26 @@ def extract_indeed_pages():
 
 def extract_indeed_jobs(last_page):
     jobs = []
-    #for page in range(last_page):
-    result = requests.get(f'{INDEED_URL}&start={0 * LIMIT}')
-    #print(result.status_code)
-    soup = BeautifulSoup(result.text, 'html.parser')
-    results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
-    for result in results:
-        title = result.find('h2', {'class': 'title'}).find('a')['title']
-        company = result.find('span',{'class': 'company'}).string.strip()
-        print(f'{title} / {company}')
-    
+    for page in range(last_page):
+        print(f'scrapping {page+1}page')
+        result = requests.get(f'{INDEED_URL}&start={page * LIMIT}')
+        soup = BeautifulSoup(result.text, 'html.parser')
+        results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
+        for result in results:
+            job = extract_job(result)
+            jobs.append(job)
     return jobs
+
+def extract_job(html):
+    title = html.find('h2', {'class': 'title'}).find('a')['title']
+    jobID = html.find('a')['id'].strip('jl_')
+    company = html.find('span',{'class': 'company'})
+    companyAnchor = company.find('a')
+    location = html.find('span', {'class': 'location'}).string
+    if companyAnchor != None:
+        company = company.find('a').string
+    else:
+        company = company.string#.strip()
+    return{'title':title, 'company':company, 'location':location, 'link':f'https://kr.indeed.com/viewjob?jk={jobID}'}
+
+
