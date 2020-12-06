@@ -28,5 +28,7 @@ def extract_indeed_jobs(last_page):
     results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
     for result in results:
         title = result.find('h2', {'class': 'title'}).find('a')['title']
-        print(title)
+        company = result.find('span',{'class': 'company'}).string.strip()
+        print(f'{title} / {company}')
+    
     return jobs
