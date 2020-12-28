@@ -1,8 +1,8 @@
+from indeed import scrapJobs as getIndeedJobs
+from so import scrapJobs as getSOJobs
 
+#indeed_jobs = getIndeedJobs()
+so_jobs = getSOJobs()
 
-from indeed import extract_indeed_pages, extract_indeed_jobs
-
-lastIndeedPage = extract_indeed_pages()
-
-indeedJobs = extract_indeed_jobs(lastIndeedPage)
-print(indeedJobs)
+#print(indeed_jobs)
+print(so_jobs)

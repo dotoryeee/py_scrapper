@@ -1,12 +1,13 @@
+#Indeed Jobs
 import requests
 from bs4 import BeautifulSoup
 print()
 
-INDEED_URL = 'https://kr.indeed.com/jobs?q=%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C'
 LIMIT = 50
+URL = f'https://kr.indeed.com/jobs?q=%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C&limit={LIMIT}'
 
-def extract_indeed_pages():
-    result = requests.get(INDEED_URL)
+def getLastPage():
+    result = requests.get(URL)
     soup = BeautifulSoup(result.text, 'html.parser')
 
     pagination = soup.find('div',{'class' : 'pagination'})
@@ -20,11 +21,11 @@ def extract_indeed_pages():
 
     return last_page
 
-def extract_indeed_jobs(last_page):
+def getJobs(last_page):
     jobs = []
     for page in range(last_page):
         print(f'scrapping {page+1}page')
-        result = requests.get(f'{INDEED_URL}&start={page * LIMIT}')
+        result = requests.get(f'{URL}&start={page * LIMIT}')
         soup = BeautifulSoup(result.text, 'html.parser')
         results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
         for result in results:
@@ -44,4 +45,8 @@ def extract_job(html):
         company = company.string#.strip()
     return{'title':title, 'company':company, 'location':location, 'link':f'https://kr.indeed.com/viewjob?jk={jobID}'}
 
+def scrapJobs():
+    lastPage = getLastPage()
+    jobs = getJobs(lastPage)
+    return jobs
 
