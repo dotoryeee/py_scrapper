@@ -13,10 +13,11 @@ def extract_indeed_pages():
     links = pagination.find_all('a')
     pages = []
 
-    for  link in links[:-1]:
+    for link in links[:-1]:
         pages.append(int(link.string))
 
     last_page = pages[-1]
+
     return last_page
 
 def extract_indeed_jobs(last_page):
