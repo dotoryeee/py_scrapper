@@ -1,7 +1,6 @@
 #Indeed Jobs
 import requests
 from bs4 import BeautifulSoup
-print()
 
 LIMIT = 50
 URL = f'https://kr.indeed.com/jobs?q=%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C&limit={LIMIT}'
@@ -29,11 +28,11 @@ def getJobs(last_page):
         soup = BeautifulSoup(result.text, 'html.parser')
         results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
         for result in results:
-            job = extract_job(result)
+            job = extractJobs(result)
             jobs.append(job)
     return jobs
 
-def extract_job(html):
+def extractJobs(html):
     title = html.find('h2', {'class': 'title'}).find('a')['title']
     jobID = html.find('a')['id'].strip('jl_')
     company = html.find('span',{'class': 'company'})

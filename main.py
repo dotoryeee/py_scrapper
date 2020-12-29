@@ -5,4 +5,4 @@ from so import scrapJobs as getSOJobs
 so_jobs = getSOJobs()
 
 #print(indeed_jobs)
-print(so_jobs)
+#print(so_jobs)
