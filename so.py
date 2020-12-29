@@ -10,7 +10,9 @@ def getLastPage():
     soup = BeautifulSoup(result.text, 'html.parser')
     pages = soup.find('div', {'class' : 's-pagination'}).find_all('a')
     last_page = pages[-2].span.get_text(strip = True)
-    return int(last_page)
+    #return int(last_page)
+    #테스트를 위해 2 페이지만 스크랩
+    return 2
 
 def extractJobs(last_page):
     jobs = []
@@ -33,7 +35,10 @@ def extractJob(jobs):
             company = data.get_text(strip = True)#.string.strip()
         else:
             location = data.string.strip()
-    return{'title':title, 'company':company, 'location':location, 'apply_link':f'https://stackoverflow.com/jobs/{job_id}'}
+    return{'title':title,
+           'company':company,
+           'location':location,
+           'link':f'https://stackoverflow.com/jobs/{job_id}'}
 
 def scrapJobs():
     last_page = getLastPage()

@@ -8,17 +8,15 @@ URL = f'https://kr.indeed.com/jobs?q=%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C&limit=
 def getLastPage():
     result = requests.get(URL)
     soup = BeautifulSoup(result.text, 'html.parser')
-
     pagination = soup.find('div',{'class' : 'pagination'})
     links = pagination.find_all('a')
     pages = []
-
     for link in links[:-1]:
         pages.append(int(link.string))
-
     last_page = pages[-1]
-
-    return last_page
+    #return last_page
+    #테스트를 위해 2 페이지만 스크랩
+    return 2
 
 def getJobs(last_page):
     jobs = []
@@ -39,10 +37,13 @@ def extractJobs(html):
     companyAnchor = company.find('a')
     location = html.find('span', {'class': 'location'}).string
     if companyAnchor != None:
-        company = company.find('a').string
+        company = company.find('a').string.strip()#strip:리턴문자 삭제
     else:
-        company = company.string#.strip()
-    return{'title':title, 'company':company, 'location':location, 'link':f'https://kr.indeed.com/viewjob?jk={jobID}'}
+        company = company.string.strip()
+    return{'title':title,
+           'company':company,
+           'location':location,
+           'link':f'https://kr.indeed.com/viewjob?jk={jobID}'}
 
 def scrapJobs():
     lastPage = getLastPage()
