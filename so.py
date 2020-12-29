@@ -17,12 +17,20 @@ def extractJobs(last_page):
     for page in range(last_page):
         result = requests.get(f'{URL}&pg={page + 1}')
         soup = BeautifulSoup(result.text, 'html.parser')
-        jobs = soup.find('div', {'class' : 'listResults'}).find_all('div',{'class' : 'f11'})
-        title = jobs.find
+        results = soup.find_all('div',{'class' : '-job'})
+        for result in results:
+            job = extractJob(result)
+            jobs.append(job)
+    return jobs
 
-        print(jobs)
-
-
+def extractJob(jobs):
+    title = jobs.find('h2').a.string
+    h3 = jobs.find('h3').find_all('span')
+    for i, data in enumerate(h3):
+        if i == 0:
+            company = data.get_text(strip = True)#.string.strip()
+        else:
+            location = data.string.strip()
 
 def scrapJobs():
     last_page = getLastPage()
