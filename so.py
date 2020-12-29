@@ -1,4 +1,4 @@
-#StackOverFlow Jobs
+#StackOverflow Jobs
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,6 +15,7 @@ def getLastPage():
 def extractJobs(last_page):
     jobs = []
     for page in range(last_page):
+        print(f'StackOverflow : scrapping {page+1}page')
         result = requests.get(f'{URL}&pg={page + 1}')
         soup = BeautifulSoup(result.text, 'html.parser')
         results = soup.find_all('div',{'class' : '-job'})
@@ -24,6 +25,7 @@ def extractJobs(last_page):
     return jobs
 
 def extractJob(jobs):
+    job_id = jobs['data-jobid']
     title = jobs.find('h2').a.string
     h3 = jobs.find('h3').find_all('span')
     for i, data in enumerate(h3):
@@ -31,6 +33,7 @@ def extractJob(jobs):
             company = data.get_text(strip = True)#.string.strip()
         else:
             location = data.string.strip()
+    return{'title':title, 'company':company, 'location':location, 'apply_link':f'https://stackoverflow.com/jobs/{job_id}'}
 
 def scrapJobs():
     last_page = getLastPage()

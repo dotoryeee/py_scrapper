@@ -23,7 +23,7 @@ def getLastPage():
 def getJobs(last_page):
     jobs = []
     for page in range(last_page):
-        print(f'scrapping {page+1}page')
+        print(f'INDEED : scrapping {page+1}page')
         result = requests.get(f'{URL}&start={page * LIMIT}')
         soup = BeautifulSoup(result.text, 'html.parser')
         results = soup.find_all('div',{'class' : 'jobsearch-SerpJobCard'})
