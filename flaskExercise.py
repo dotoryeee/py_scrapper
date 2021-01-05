@@ -26,4 +26,18 @@ def report():
                            searching_by=word,
                            jobs=jobs)
 
+@app.route('/export')
+def export():
+    try:
+        word = request.args.get('word')
+        if not word:
+            raise Exception()
+        word = word.lower()
+        jobs = db.get(word)
+        if not jobs:
+            raise Exception
+        return f'generate CSV for {word}'
+    except:
+        return redirect('/')
+
 app.run(host = 'localhost')
