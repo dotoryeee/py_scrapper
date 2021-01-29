@@ -41,7 +41,7 @@ def findCurrency(num):
         num -= 3
     catch = currency_data[num-1:num+3]
     print(f'you selected {catch[1]}')
-    print(f'{catch[0]} s current is {catch[1]}({catch[2]})')
+    print(f'{catch[0]} s currency is {catch[1]}({catch[2]})')
 
 def main():
     while True:
