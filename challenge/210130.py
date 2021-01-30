@@ -2,12 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from babel.numbers import format_currency
 
-"""
-Use the 'format_currency' function to format the output of the conversion
-format_currency(AMOUNT, CURRENCY_CODE, locale="ko_KR" (no need to change this one))
-"""
-print(format_currency(5000, "KRW", locale="ko_KR"))
-
 URL_iban = "https://www.iban.com/currency-codes"
 URL_twise = "https://transferwise.com/gb/currency-converter/"
 currency_code_data = []
@@ -84,18 +78,17 @@ def main():
 
         #환율 가져오기 시작
         URL_twise = URL_twise+origin+'-to-'+target+'-rate?amount='+amount
-        print(URL_twise)
+        #print(URL_twise)
         data2 = conn(URL_twise)
         converted = catchCurrency(data2)
-        converted = format_currency(converted, target, locale="ko_KR")
-        print(converted)
-        print(type(converted))
-        print(f'{amount}{origin} = {converted*int(amount)}{target}')
+        print(f'{amount}{origin} = {converted+amount}{target}')
 
         while True:
             yn = input('do you want to try again? y/n : ')
             if yn == 'N' or 'n':
                 break
+
+        format_currency(converted, "KRW", locale="ko_KR")
 main()
 
 
