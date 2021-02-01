@@ -62,14 +62,17 @@ def getJobs(url): #브랜드별 공고 긁어오기
 def exportCSV(title, alba_datas): #CSV출력
     field_names = ['location', 'title', 'time', 'pay']
     #newline = ''을 입력하면 csv 라인공백을 제거할 수 있다
-    with open(title+'.csv','w+',newline='',encoding='utf') as f:
-        print(f'exporting {title}.csv', end='')
-        write = csv.writer(f)
-        write.writerow(field_names)
-        for data in alba_datas:
-            print('.',end='')
-            write.writerow([data['location'], data['title'], data['time'], data['pay']])
-        print('complete!')
+    try:
+        with open(title+'.csv','w+',newline='',encoding='utf') as f:
+            print(f'exporting {title}.csv', end='')
+            write = csv.writer(f)
+            write.writerow(field_names)
+            for data in alba_datas:
+                print('.',end='')
+                write.writerow([data['location'], data['title'], data['time'], data['pay']])
+            print('complete!')
+    except:
+        pass
 
 def main():
     data = conn(alba_url)
