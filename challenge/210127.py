@@ -9,7 +9,9 @@ All this functions should check for errors, follow the comments to see all cases
 
 There should be NO ERRORS from Python in the console.
 """
-#add_to_dict(my_english_dict, "kimchi", "The source of life.")
+
+
+# add_to_dict(my_english_dict, "kimchi", "The source of life.")
 def add_to_dict(dictName, name='', value=''):
     if name == '' or value == '' or name in dictName:
         print('error')
@@ -18,14 +20,15 @@ def add_to_dict(dictName, name='', value=''):
         print(f'{name} has been added')
 
 
-#print('\nget_from_dict(my_english_dict, "kimchi"):')
+# print('\nget_from_dict(my_english_dict, "kimchi"):')
 def get_from_dict(dictName, name=''):
     if name in dictName and name != '':
         print(dictName[name])
     else:
         print('error')
 
-#update_word(my_english_dict, "kimchi", "Food from the gods.")
+
+# update_word(my_english_dict, "kimchi", "Food from the gods.")
 def update_word(dictName, name='', newValue=''):
     if name in dictName and name != '' and newValue != '':
         dictName[name] = newValue
@@ -34,7 +37,7 @@ def update_word(dictName, name='', newValue=''):
         print('error')
 
 
-#delete_from_dict(my_english_dict, "kimchi")
+# delete_from_dict(my_english_dict, "kimchi")
 def delete_from_dict(dictName, name=''):
     if name in dictName:
         del dictName[name]
@@ -46,7 +49,6 @@ def delete_from_dict(dictName, name=''):
 import os
 
 os.system('clear')
-
 
 my_english_dict = {}
 
@@ -67,7 +69,6 @@ add_to_dict(my_english_dict, "kimchi", "The source of life.")
 # Should not work. kimchi is already on the dict
 print('\nadd_to_dict(my_english_dict, "kimchi", "My fav. food"):')
 add_to_dict(my_english_dict, "kimchi", "My fav. food")
-
 
 print("\n\n###### get_from_dict ######\n")
 
@@ -109,7 +110,6 @@ update_word(my_english_dict, "kimchi", "Food from the gods.")
 print('\nget_from_dict(my_english_dict, "kimchi"):')
 get_from_dict(my_english_dict, "kimchi")
 
-
 print("\n\n###### delete_from_dict ######\n")
 
 # Should not work. First argument should be a dict.
@@ -132,4 +132,4 @@ delete_from_dict(my_english_dict, "kimchi")
 print('\nget_from_dict(my_english_dict, "kimchi"):')
 get_from_dict(my_english_dict, "kimchi")
 
-# \/\/\/\/\/\/\ END DO NOT TOUCH  \/\/\/\/\/\/\
+# \/\/\/\/\/\/\ END DO NOT TOUCH  \/\/\/\/\/\/
