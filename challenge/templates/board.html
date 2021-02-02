@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ data['title'] }}</title>
+    <style>
+        .title {
+            display: flex;
+            justify-content: center;
+        }
+
+        .title__board--info {
+            display: flex;
+            justify-content: space-evenly;
+        }
+    </style>
+</head>
+<body>
+<div class="title">
+    <h1>{{ data['title'] }}</h1>
+</div>
+<div class="title__board--info">
+    <div>
+        <h3>{{ data['points'] }}points</h3>
+    </div>
+    <div>
+        <h3>by{{ data['author'] }}</h3>
+    </div>
+    <div>
+        <a href="{{ data['url'] }}">
+            <h3>{{ data['url'] }}</h3>
+        </a>
+    </div>
+</div>
+
+{% for comment in data['children'] %}
+
+<div class="body--comment">
+    {% if comment['author'] != None %}
+        {% autoescape false %}
+        <h4>
+            {{ comment['author'] }}
+        </h4>
+        <span>
+            {{ comment['text'] }}
+        </span>
+        {% endautoescape %}
+    {% else %}
+        <span>deleted!</span>
+    {% endif %}
+</div>
+{% endfor %}
+
+</body>
+</html>

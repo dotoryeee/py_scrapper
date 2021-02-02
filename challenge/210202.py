@@ -36,7 +36,7 @@ def getNewsData(target):
 def getBoardData(target):
     print(f'connect to BOARD : {target}')
     data = conn(target)
-    print(data)
+    return data
 
 
 def extractNewsList(data):
@@ -48,10 +48,29 @@ def extractNewsList(data):
             points = list['points']
             author = list['author']
             num_comments = list['num_comments']
-            reprocessData.append([title, url, points, author, num_comments])
+            objectID = list['objectID']
+            reprocessData.append([title, url, points, author, num_comments, objectID])
     except:
         pass
     return reprocessData
+
+
+def extractBoardList(data):
+    dataDict = {}
+    dataDict["title"] = data["title"]
+    dataDict["points"] = data["points"]
+    dataDict["author"] = data["author"]
+    dataDict["url"] = data["url"]
+    comments = []
+    for i in data["children"]:
+        if i['author'] == 'null':
+            break
+        comment = []
+        comment['author'] = i['author']
+        comment['text'] = i['text']
+        comments.append(comment)
+    dataDict['comments'] = comments
+    return dataDict
 
 
 def getParameter():
@@ -90,7 +109,8 @@ def home():
 def targetID(id):
     boardURL = make_detail_url(id)
     data = getBoardData(boardURL)
-    return id
+    #data = extractBoardList(data)
+    return render_template('board.html', data=data)
 
 
 app.run(host="localhost")

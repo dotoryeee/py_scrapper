@@ -26,7 +26,9 @@
     <h3>author</h3>
     <h3>comments</h3>
     {% for line in data %}
+        <a href='/{{ line[5] }}'>
         <h3>{{ line[0] }}</h3>
+        </a>
         <a href="{{ line[1] }}">GO LINK</a>
         <span>{{ line[2] }} points</span>
         <span>by : {{ line[3] }}</span>
