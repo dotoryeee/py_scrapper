@@ -32,6 +32,7 @@ def getNewsData(target):
         print('new data downloaded')
         return data
 
+
 def getBoardData(target):
     print(f'connect to BOARD : {target}')
     data = conn(target)
@@ -53,6 +54,14 @@ def extractNewsList(data):
     return reprocessData
 
 
+def getParameter():
+    try:
+        parameter = request.args.get('order_by')
+        return parameter
+    except:
+        return None
+
+
 # This function makes the URL to get the detail of a storie by id.
 # Heres the documentation: https://hn.algolia.com/api
 
@@ -63,7 +72,16 @@ app = Flask("My HK News")
 
 @app.route('/')
 def home():
-    data = getNewsData(popular)
+    parameter = getParameter()
+    print(f'{parameter} parameter received')
+    if parameter == 'new':
+        print('new page call')
+        data = getNewsData(new)
+    elif parameter is None or "popular":
+        print('popular page call')
+        data = getNewsData(popular)
+    else:
+        return 'param error'
     data = extractNewsList(data)
     return render_template('HKnews.html', data=data)
 
@@ -73,18 +91,6 @@ def targetID(id):
     boardURL = make_detail_url(id)
     data = getBoardData(boardURL)
     return id
-
-
-@app.route('/?order_by=<option>')
-def sortedlist(option):
-    if option == 'new':
-        data = getNewsData(new)
-        data = extractNewsList(data)
-        return 'order by new'
-    else:
-        data = getNewsData(popular)
-        data = extractNewsList(data)
-        return 'order by popular'
 
 
 app.run(host="localhost")
