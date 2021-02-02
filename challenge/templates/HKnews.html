@@ -2,12 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MY HK NEWS</title>
+    <style>
+        section {
+            display: grid;
+            gap: 20px;
+            grid-template-columns:repeat(5, 1fr);
+        }
+    </style>
 </head>
 <body>
-    <form action="/search" method="get">
-        <input required name="keyword"/>
-        <button>GO</button>
-    </form>
+<h1>HK NEWS~~~~~~~~</h1>
+<section>
+    <span>title</span>
+    <span>url</span>
+    <span>points</span>
+    <span>author</span>
+    <span>comments</span>
+    {% for line in data %}
+        <span>{{ line[0] }}</span>
+        <a href="{{ line[1] }}">GO LINK</a>
+        <span>{{ line[2] }}</span>
+        <span>{{ line[3] }}</span>
+        <span>{{ line[4] }}</span>
+    {% endfor %}
+</section>
 </body>
 </html>
