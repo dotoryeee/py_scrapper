@@ -21,24 +21,35 @@ def make_detail_url(id):
 
 
 def getNewsData(target):
+    print(f'connect to NEWS : {target}')
     try:  # db{}에 이미 데이터가 있으면 그거 찾아서 반환
         already = db[target]
+        print('data loaded from DB')
         return already
     except:
         data = conn(target)
         db[target] = data
+        print('new data downloaded')
         return data
+
+def getBoardData(target):
+    print(f'connect to BOARD : {target}')
+    data = conn(target)
+    print(data)
 
 
 def extractNewsList(data):
     reprocessData = []
-    for list in data['hits']:
-        title = list['title']
-        url = list['url']
-        points = list['points']
-        author = list['author']
-        num_comments = list['num_comments']
-        reprocessData.append([title, url, points, author, num_comments])
+    try:
+        for list in data["hits"]:
+            title = list['title']
+            url = list['url']
+            points = list['points']
+            author = list['author']
+            num_comments = list['num_comments']
+            reprocessData.append([title, url, points, author, num_comments])
+    except:
+        pass
     return reprocessData
 
 
@@ -59,14 +70,14 @@ def home():
 
 @app.route('/<id>')
 def targetID(id):
-    data = make_detail_url(id)
-    data = extractNewsList(data)
+    boardURL = make_detail_url(id)
+    data = getBoardData(boardURL)
     return id
 
 
 @app.route('/?order_by=<option>')
 def sortedlist(option):
-    if option is 'new':
+    if option == 'new':
         data = getNewsData(new)
         data = extractNewsList(data)
         return 'order by new'

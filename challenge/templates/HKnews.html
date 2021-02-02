@@ -10,21 +10,22 @@
             grid-template-columns:repeat(5, 1fr);
         }
     </style>
-</head>
 <body>
 <h1>HK NEWS~~~~~~~~</h1>
+<a href="/" name="order_by" method="get">NEW</a>
+<a href="/" name="order_by" method="get">popular</a>
 <section>
-    <span>title</span>
-    <span>url</span>
-    <span>points</span>
-    <span>author</span>
-    <span>comments</span>
+    <h3>title</h3>
+    <h3>url</h3>
+    <h3>points</h3>
+    <h3>author</h3>
+    <h3>comments</h3>
     {% for line in data %}
-        <span>{{ line[0] }}</span>
+        <h3>{{ line[0] }}</h3>
         <a href="{{ line[1] }}">GO LINK</a>
-        <span>{{ line[2] }}</span>
-        <span>{{ line[3] }}</span>
-        <span>{{ line[4] }}</span>
+        <span>{{ line[2] }} points</span>
+        <span>by : {{ line[3] }}</span>
+        <span>{{ line[4] }}comments</span>
     {% endfor %}
 </section>
 </body>
