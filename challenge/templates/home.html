@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>reddit reader~~~~~~~~</title>
+    <style>
+        .body__title {
+            display: flex;
+            justify-content: center;
+        }
+
+        .body__box--list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 800px;
+            width: 80vw;
+            border: 5px teal dashed;
+        }
+
+        .body__selectbox {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-
+<div class="body__title">
+    <h1>reddit reader</h1>
+</div>
+<div class="body__title">
+    <h2>aggregate your favorite subreddits</h2>
+</div>
+<div class="body__box--list">
+    <h4>select what you want!</h4>
+    {% for item in list %}
+        <form class="body__selectbox" action="/read" method="get">
+        <input type="checkbox" value="{{ item }}">
+        <span>{{ item }}</span>
+    {% endfor %}
+    <button value="javascript" name="target">go aggregate</button>
+    </form>
+</div>
 </body>
 </html>

@@ -2,9 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>reddit reader</title>
+    <style>
+        .reader__title {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-
+<div class="reader__title">
+    <h1>reddit reader</h1>
+</div>
+<div class="reader__title">
+    <h3>reading:</h3>
+</div>
+<div class="reader__body">
+    {% for line in data %}
+        <div class="body__title">
+            <a href="{{ line[2] }}" target="_blank">
+                <h3>{{ line[0] }} votes</h3>
+            </a>
+            <span>{{ line[1] }}</span>
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>
