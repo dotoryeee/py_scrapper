@@ -34,8 +34,6 @@ subreddits = [
     "django"
 ]
 
-url = 'https://www.reddit.com/r/javascript'
-
 
 def conn(url):
     print(f'connecting to {url}')
@@ -56,12 +54,18 @@ def dataToDict(data):
     data = json.loads(data)
     return data
 
+
 def getParameter():
     try:
-        parameter = request.args.get('read')
+        parameter = request.args
         return parameter
     except:
         return None
+
+
+def makeUrl(param):
+    url = 'https://www.reddit.com/r/javascript'  # +param
+    return url
 
 
 # DAO
@@ -82,18 +86,21 @@ def MakeInfo(url):
     print('start rendering')
     return datas
 
+
 app = Flask("DayEleven")
 
 
 @app.route('/')
 def home():
-    return render_template('home.html',list=subreddits)
+    return render_template('home.html', list=subreddits)
 
 
 @app.route('/read')
 def board():
     param = getParameter()
-    print(f'access board page({param})')
+    print(f'parameter : {param}')
+    url = makeUrl(param.keys())
+    print(f'access board page({param.keys()})')
     data = MakeInfo(url)
     return render_template('read.html', data=data)
 

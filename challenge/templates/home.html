@@ -13,14 +13,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 800px;
+            height: 400px;
             width: 80vw;
             border: 5px teal dashed;
         }
 
-        .body__selectbox {
-            display: flex;
+        .body__selects {
+            display: block;
         }
+
     </style>
 </head>
 <body>
@@ -31,14 +32,19 @@
     <h2>aggregate your favorite subreddits</h2>
 </div>
 <div class="body__box--list">
-    <h4>select what you want!</h4>
-    {% for item in list %}
-        <form class="body__selectbox" action="/read" method="get">
-        <input type="checkbox" value="{{ item }}">
-        <span>{{ item }}</span>
-    {% endfor %}
-    <button value="javascript" name="target">go aggregate</button>
-    </form>
+    <div>
+        <h4>select what you want!</h4>
+    </div>
+    <div>
+        <form class="body__selects" action="/read" method="get">
+            {% for item in list %}
+                <div class="body__selects"></div>
+                <input type="checkbox" name="{{ item }}" value="on">
+                <label id="{{ item }}">{{ item }}  </label>
+            {% endfor %}
+            <input type="submit" value="go aggregate">
+        </form>
+    </div>
 </div>
 </body>
 </html>
