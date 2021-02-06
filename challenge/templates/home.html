@@ -18,7 +18,9 @@
             border: 5px teal dashed;
         }
 
-        .body__selects {
+        .body__selects,
+        .body__box--title,
+        .body__box--btn {
             display: block;
         }
 
@@ -33,7 +35,7 @@
 </div>
 <div class="body__box--list">
     <div>
-        <h4>select what you want!</h4>
+        <h4 class="body__box--title">select what you want!</h4>
     </div>
     <div>
         <form class="body__selects" action="/read" method="get">
@@ -42,7 +44,7 @@
                 <input type="checkbox" name="{{ item }}" value="on">
                 <label id="{{ item }}">{{ item }}  </label>
             {% endfor %}
-            <input type="submit" value="go aggregate">
+            <input class="body__box--btn" type="submit" value="go aggregate">
         </form>
     </div>
 </div>
