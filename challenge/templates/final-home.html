@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://andybrewer.github.io/mvp/mvp.css" rel="stylesheet"></link>
+    <style>
+        body{
+            height: 100vh;
+            width: 100vw;
+        }
+        body,
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+    <title>final day</title>
+</head>
+<body>
+<div class="title"><h1>remote jobs</h1></div>
+<div class="box">
+    <div>
+        <h2>search by term</h2>
+    </div>
+    <div>
+        <form class="box" action="/result" method="get">
+            <input type="text" name="target" required placeholder="type what you want">
+            <button type="submit">GO</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

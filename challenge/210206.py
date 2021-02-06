@@ -9,10 +9,11 @@ headers = {
 
 
 def makeURL(target_job):
-    urls = ['https://stackoverflow.com/jobs?r=true&q=' + target_job,
-            'https://weworkremotely.com/remote-jobs/search?term=' + target_job,
-            'https://remoteok.io/remote-dev+' + target_job + '-jobs']
-    return urls
+    url = {'SO': 'https://stackoverflow.com/jobs?r=true&q=' + target_job,
+           'WWR': 'https://weworkremotely.com/remote-jobs/search?term=' + target_job,
+           'RO': 'https://remoteok.io/remote-dev+' + target_job + '-jobs'}
+
+    return url
 
 
 def conn(url):
@@ -23,7 +24,7 @@ def conn(url):
 
 # stackoverflow
 def extractSO(data):
-    print(f'Extracting SO')
+    print(f'Extracting SO', end='')
     soup = BeautifulSoup(data, 'html.parser')
     soup = soup.find('div', class_='listResults')
     soup = soup.find_all('div', class_='fl1')
@@ -34,6 +35,7 @@ def extractSO(data):
             company = line.find('h3').find('span').string.rstrip()
             link = line.find('h2').find('a')['href']
             datas.append([title, company, 'https://stackoverflow.com' + link])
+            print('.', end='')
         except:
             pass
     return datas
@@ -41,7 +43,7 @@ def extractSO(data):
 
 # weworkremotely
 def extractWWR(data):
-    print(f'Extracting WWR')
+    print(f'Extracting WWR', end='')
     soup = BeautifulSoup(data, 'html.parser')
     soup = soup.find_all('li', class_='feature')
     datas = []
@@ -51,6 +53,7 @@ def extractWWR(data):
             company = line.find('span', class_='company').string
             link = line.find('a')['href']
             datas.append([title, company, 'https://weworkremotely.com' + link])
+            print('.', end='')
     except:
         pass
     return datas
@@ -58,7 +61,7 @@ def extractWWR(data):
 
 # remoteok
 def extractRO(data):
-    print(f'Extracting RO')
+    print(f'Extracting RO', end='')
     soup = BeautifulSoup(data, 'html.parser')
     soup = soup.find('table', id='jobsboard')
     soup = soup.find_all('td', class_='company_and_position')
@@ -69,12 +72,45 @@ def extractRO(data):
             link = line.find('a', class_='preventLink')['href']
             company = line.find('a', class_='companyLink').find('h3').string
             datas.append([title, company, 'https://remoteok.io/' + link])
+            print('.', end='')
         except:
             pass
     return datas
 
 
-# test
-# print(extractSO(conn('https://stackoverflow.com/jobs?r=true&q=python')))
-# print(extractWWR(conn('https://weworkremotely.com/remote-jobs/search?term=python')))
-#print(extractRO(conn('https://remoteok.io/remote-dev+python-jobs')))
+def getParam():
+    param = request.args.get('target')
+    param = param.lower()
+    return param
+
+
+def main():
+    param = getParam()
+    print(f'start searching {param}')
+    url = makeURL(param)
+    data = []
+    data += extractSO(conn(url['SO']))
+    print('complete')
+    data += extractWWR(conn(url['WWR']))
+    print('complete')
+    data += extractRO(conn(url['RO']))
+    print('complete')
+    print(data)
+    return data
+
+
+app = Flask('Finalday')
+
+
+@app.route('/')
+def home():
+    return render_template('final-home.html')
+
+
+@app.route('/result')
+def result():
+    data = main()
+    return render_template('final-result.html', data=data)
+
+
+app.run(host='localhost')
