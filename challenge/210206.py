@@ -95,7 +95,7 @@ def main():
     print('complete')
     data += extractRO(conn(url['RO']))
     print('complete')
-    print(data)
+    #print(data)
     return data
 
 
