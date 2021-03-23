@@ -1,7 +1,11 @@
 package main
 
-import "fmt" //Formatting
+import (
+	"fmt"
+	"github.com/dotoryeee/Scrapper/GO/something"
+) //Formatting
 
 func main() {
-	fmt.Println("hello") //Function 을 대문자로 시작하면 Export 가능
+	fmt.Println("HI") //Function 을 대문자로 시작하면 Export 가능
+	something.SayHello()
 }
