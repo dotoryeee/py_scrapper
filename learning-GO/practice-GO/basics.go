@@ -101,6 +101,10 @@ func main() {
 
 	//Struct 사용 예시
 	favFood := []string{"hamburger", "chicken"}
-	doto := testStruct{"jeong", 29, favFood}
-	fmt.Println(doto)
+	doto1 := testStruct{"jeong", 29, favFood}
+	fmt.Println(doto1)
+	fmt.Println(doto1.name)
+
+	doto2 := testStruct{name: "jeongjeong", favFood: favFood, age: 15}
+	fmt.Println(doto2)
 }
