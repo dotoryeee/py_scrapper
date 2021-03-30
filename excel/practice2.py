@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+import datetime
 
 wb = load_workbook("test.xlsx")
 ws = wb.active
@@ -43,5 +44,20 @@ for row in ws.iter_rows(max_row=4):
 # 데이터 이동
 ws.move_range("B3:C53", rows=0, cols=1)
 
+ws2 = wb.create_sheet("sheet2")
 
+ws2["A1"] = datetime.datetime.today()
+ws2["A2"] = "=sum(1, 2, 3)"
+ws2["A3"] = '=average(6, 2, 1)'
+ws2["A4"] = "=sum(A2:A3)"
 wb.save("test.xlsx")
+wb.close()
+
+print('워크북을 닫고 data_only 모드로 다시 오픈')
+# 워크북을 로드할 때 Data_only 옵션을 이용해 수식이 아닌 결과값을 가져올 수 있다
+wb = load_workbook('test.xlsx', data_only=True)
+ws = wb["sheet2"]
+
+for rows in ws.values:
+    for cell in rows:
+        print(cell)
